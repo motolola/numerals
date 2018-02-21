@@ -38,6 +38,6 @@ public function parse($numeral)
         return $result;
     }
     
-<h3Testing</h3>
+<h3>Testing</h3>
     Both methods were unit tested and passed. 
     Scalar type hints and return types were removed for testing.
