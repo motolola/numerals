@@ -9,6 +9,8 @@
 namespace App\Http\NumeralRepository;
 
 
+use phpDocumentor\Reflection\Types\Integer;
+
 interface RomanNumerals
 {
 

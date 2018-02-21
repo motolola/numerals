@@ -7,45 +7,45 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+## About Numerals ...
+Numerals is an application built and tested using Laravel and PHPUnit as testing framework.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+Class /APP/Http/NumeralRepository/IntToNumeral implements the two methods in interface /APP/Http/NumeralRepository/RomanNumerals. <br/>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<h3>The first method: generate()</h3>
+ public function generate($integer)
+     {
+ 
+         foreach($this->correspondingNumerals as $roman => $value){
+ 
+             $matches = intval($integer/$value);
+             $this->intResult .= str_repeat($roman,$matches);
+             $integer = $integer % $value;
+         }
+         return $this->intResult;
+     }
+     
+     
+This matches digits in a given integer value with its corresponding Roman Numeral value in a predefined array. eg 10 correspondes to X, starting from the left.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+On iteration, the initial integer is recreated using modulo eg 12 % 10 => 2, as the processis repeated until no value left to break.
 
-## Learning Laravel
+<h3>The second method: parse()</h3>
+It is the reverse of the generate() method in which the strings are replaced by corrensponding number in the same array declared in the class level.
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+public function parse($numeral)
+    {
+        $result = 0;
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
-
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+        foreach ($this->correspondingNumerals as $key => $value) {
+            while (strpos($numeral, $key) === 0) {
+                $result += $value;
+                $numeral = substr($numeral, strlen($key));
+            }
+        }
+        return $result;
+    }
+    
+<h3Testing</h3>
+    Both methods were unit tested and passed. 
+    Scalar type hints and return types were removed for testing.
