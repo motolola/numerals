@@ -1,6 +1,8 @@
 
 ## About Numerals ...
 Numerals is an application built and tested using Laravel and PHPUnit as testing framework.
+<h3>Project folder location.</h3>
+This is based on Laravel MVC framework, and the numerals class is located at /APP/HTTP/NUMERALREPOSITORY.
 
 Class /APP/Http/NumeralRepository/IntToNumeral implements the two methods in interface /APP/Http/NumeralRepository/RomanNumerals. <br/>
 
